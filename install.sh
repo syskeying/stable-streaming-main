@@ -70,6 +70,28 @@ INGESTS_LOCKED="n"
 EOF
     
     echo -e "${GREEN}✓ Default configuration created (admin/password)${NC}"
+
+    # Ask for OBS configuration
+    echo ""
+    echo "Step 2b: OBS Configuration"
+    echo "Is OBS running on this server (localhost) or remote?"
+    echo "1) Local (default - OBS will be installed and started on this server)"
+    echo "2) Remote (connect to OBS on another machine)"
+    read -p "Enter choice (1 or 2): " obs_choice
+    
+    if [ "$obs_choice" = "2" ]; then
+        read -p "Enter OBS host IP address: " obs_host
+        read -p "Enter OBS WebSocket port (default 4455): " obs_port
+        obs_port=${obs_port:-4455}
+        
+        echo "OBS_HOST=\"$obs_host\"" >> "$CONFIG_FILE"
+        echo "OBS_PORT=\"$obs_port\"" >> "$CONFIG_FILE"
+        
+        echo -e "${GREEN}✓ Remote OBS configured${NC}"
+        echo "Make sure OBS on $obs_host has WebSocket server enabled on port $obs_port"
+    else
+        echo "Using local OBS (localhost:4455)"
+    fi
 else
     echo "Step 2: Configuration already exists, skipping..."
 fi
