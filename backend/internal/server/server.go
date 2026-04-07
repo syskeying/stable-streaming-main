@@ -102,11 +102,25 @@ func (s *Server) setupRoutes() {
 	s.setupAPIRoutes("/server/api")
 
 	// Serve Frontend (SPA)
-	workDir, _ := os.Getwd()
-	// Running from project root via start.sh
-	filesDir := filepath.Join(workDir, "frontend/dist")
+	filesDir := filepath.Join("frontend", "dist")
 
-	// Verify it exists
+	if info, err := os.Stat(filesDir); err != nil || !info.IsDir() {
+		// Try resolving from executable location so service can run from any cwd
+		if exePath, err := os.Executable(); err == nil {
+			exeDir := filepath.Dir(exePath)
+			tries := []string{
+				filepath.Join(exeDir, "../frontend/dist"),
+				filepath.Join(exeDir, "../../frontend/dist"),
+			}
+			for _, candidate := range tries {
+				if info, err := os.Stat(candidate); err == nil && info.IsDir() {
+					filesDir = candidate
+					break
+				}
+			}
+		}
+	}
+
 	if info, err := os.Stat(filesDir); err != nil || !info.IsDir() {
 		log.Printf("WARNING: Frontend files not found at %s. UI may return 404.", filesDir)
 	} else {
