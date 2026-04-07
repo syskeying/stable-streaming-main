@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"net/url"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -203,6 +204,8 @@ func (s *Server) setupAPIRoutes(mountPath string) {
 			r.Get("/vnc/token", s.handleGetVNCToken)
 			// VNC direct URL endpoint returns Cloudflare hostname for low-latency connection
 			r.Get("/vnc/direct-url", s.handleGetVNCDirectURL)
+			// Portal path endpoint for validated websockify path
+			r.Get("/vnc/websockify-path", s.handleGetVNCWebsockifyPath)
 			// Websockify must be defined BEFORE the catch-all VNC mount
 			r.Get("/vnc/websockify", s.handleVNCWebSocket)
 

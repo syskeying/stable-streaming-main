@@ -1147,6 +1147,18 @@ func (s *Server) handleGetVNCDirectURL(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
+func (s *Server) handleGetVNCWebsockifyPath(w http.ResponseWriter, r *http.Request) {
+	path := "/server/api/vnc/websockify"
+	if token := r.URL.Query().Get("token"); token != "" {
+		path = fmt.Sprintf("%s?token=%s", path, url.QueryEscape(token))
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(map[string]string{
+		"path": path,
+	})
+}
+
 // generateSecurePassword creates a random alphanumeric password
 func generateSecurePassword(length int) string {
 	const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"

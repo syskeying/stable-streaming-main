@@ -131,8 +131,8 @@ const OBSPage: React.FC = () => {
 
         // 3) Local fallback (direct backend access without Portal)
         const localPath = vncToken
-            ? `server/api/vnc/websockify?token=${encodeURIComponent(vncToken)}`
-            : 'server/api/vnc/websockify';
+            ? `/server/api/vnc/websockify?token=${encodeURIComponent(vncToken)}`
+            : '/server/api/vnc/websockify';
         return `/server/api/vnc/vnc.html?${baseParams}&path=${localPath}${passwordParam}`;
     })();
 
