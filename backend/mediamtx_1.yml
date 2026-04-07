@@ -1,0 +1,25 @@
+logLevel: info
+api: yes
+apiAddress: 127.0.0.1:9500
+metrics: no
+pprof: no
+hls: no
+hlsAddress: ""
+webrtc: no
+webrtcAddress: ""
+record: no
+
+# RTSP Egress for OBS (public shareable)
+rtsp: yes
+rtspAddress: 0.0.0.0:7000
+protocols: [tcp]
+rtpAddress: 127.0.0.1:7500
+rtcpAddress: 127.0.0.1:7501
+
+# RTMP Ingest
+rtmp: yes
+rtmpAddress: :9000
+srt: no
+
+paths:
+  "~^.*$":

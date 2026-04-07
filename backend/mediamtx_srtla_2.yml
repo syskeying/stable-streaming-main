@@ -1,0 +1,21 @@
+logLevel: info
+api: no
+metrics: no
+pprof: no
+rtmp: no
+srt: no
+hls: no
+webrtc: no
+record: no
+
+# RTSP Egress for SRTLA
+rtsp: yes
+rtspAddress: 0.0.0.0:7002
+protocols: [tcp]
+rtpAddress: 127.0.0.1:7502
+rtcpAddress: 127.0.0.1:7503
+
+paths:
+  "Dgbb9u64K38H1ji4gcwx/stream":
+    source: udp://127.0.0.1:7001
+    sourceOnDemand: no
